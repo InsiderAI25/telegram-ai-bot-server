@@ -1,9 +1,10 @@
 from flask import Flask, request
 import telegram
+import asyncio
 
 app = Flask(__name__)
 
-# ✅ Updated Tokens and chat IDs
+# Updated Tokens and Chat IDs
 MONIQUE_TOKEN = '8067661887:AAGL4vcZBI6E7avI72VPCGI2WLwJYsxJzlE'
 COORDINATOR_TOKEN = '7719709224:AAHF5h3We8e8WdVHc6rh-MdtmWwlLhIgDH0'
 MONIQUE_CHAT_ID = 1194534732
@@ -21,13 +22,13 @@ def vote_handler():
     print(f"Received proposal: {proposal}, decision: {decision}")
 
     try:
-        monique_bot.send_message(chat_id=MONIQUE_CHAT_ID, text=f"✅ Vote Received: {proposal} — {decision}")
+        asyncio.run(monique_bot.send_message(chat_id=MONIQUE_CHAT_ID, text=f"✅ Vote Received: {proposal} — {decision}"))
         print("✅ Monique message sent.")
     except Exception as e:
         print("❌ Monique failed:", e)
 
     try:
-        coordinator_bot.send_message(chat_id=COORDINATOR_CHAT_ID, text=f"📩 Vote Recorded: {proposal} — {decision}")
+        asyncio.run(coordinator_bot.send_message(chat_id=COORDINATOR_CHAT_ID, text=f"📩 Vote Recorded: {proposal} — {decision}"))
         print("✅ Coordinator message sent.")
     except Exception as e:
         print("❌ Coordinator failed:", e)
@@ -37,7 +38,7 @@ def vote_handler():
 
 @app.route('/')
 def index():
-    return "Telegram bot server (Docker, token updated) is running.", 200
+    return "Telegram bot server (asyncio patched) is running.", 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
