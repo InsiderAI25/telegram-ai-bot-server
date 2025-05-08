@@ -18,7 +18,7 @@ def vote_handler():
     data = request.json
     decision = data.get("decision", "undecided")
     proposal = data.get("proposal", "Unnamed Proposal")
-    monique_bot.send_message(chat_id="@MONIQUEADMINISTOR_BOT", text=f"Vote Received: {proposal} — {decision}")
+    monique_bot.send_message(chat_id=1194534732, text=f"Vote Received: {proposal} — {decision}")
     coordinator_bot.send_message(chat_id="@COORDINATOR_AI_BOT", text=f"Vote Recorded: {proposal} — {decision}")
     return {"status": "vote recorded"}, 200
 
